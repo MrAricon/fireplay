@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react"
 import { useAuth } from "@/context/auth-context"
 import {
