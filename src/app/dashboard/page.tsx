@@ -6,6 +6,7 @@ import { collection, getDocs } from "firebase/firestore"
 import { db } from "@/firebase/firebase"
 import { useAuth } from "@/context/auth-context"
 import type { Game } from "@/types/game"
+import type { Message } from "@/types/message"
 import type { CartItem } from "@/lib/cart"
 import Link from "next/link"
 import { User, Settings, Heart, ShoppingCart, MessageCircle, Clock } from 'lucide-react'
@@ -13,7 +14,7 @@ import { User, Settings, Heart, ShoppingCart, MessageCircle, Clock } from 'lucid
 export default function DashboardPage() {
     const [favorites, setFavorites] = useState<Game[]>([]);
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
-    const [messages, setMessages] = useState<any[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState("profile");
     const { user } = useAuth();
@@ -56,13 +57,18 @@ export default function DashboardPage() {
                 const messagesRef = collection(db, "messages");
                 const messagesSnapshot = await getDocs(messagesRef);
 
-                const messagesData: any[] = [];
+                const messagesData: Message[] = [];
                 messagesSnapshot.forEach((doc) => {
                     const data = doc.data();
                     if (data.userId === user.uid) {
                         messagesData.push({
                             id: doc.id,
-                            ...data
+                            createdAt: "",
+                            email: "",
+                            name: "",
+                            subject: "",
+                            message: "",
+                            userId: ""
                         });
                     }
                 });

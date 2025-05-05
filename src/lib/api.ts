@@ -1,6 +1,7 @@
 import axios from "axios"
 import type { Game } from "@/types/game"
 import type { GameDetails } from "@/types/game-details"
+import type { GameStore } from "@/types/game-store"
 
 const API_KEY = process.env.NEXT_PUBLIC_RAWG_API_KEY
 const BASE_URL = "https://api.rawg.io/api"
@@ -83,6 +84,7 @@ export async function getGameDetails(slug: string): Promise<GameDetails | null> 
 export async function getGameScreenshots(id: number): Promise<string[]> {
     try {
         const response = await axios.get(`${BASE_URL}/games/${id}/screenshots?key=${API_KEY}`)
+        console.log(response.data.results)
         return response.data.results.map((screenshot: any) => screenshot.image)
     } catch (error) {
         console.error(`Error fetching screenshots for game ${id}:`, error)
@@ -123,9 +125,10 @@ export async function getGamesByGenre(
 }
 
 // Función para obtener tiendas donde está disponible el juego
-export async function getGameStores(gameId: number): Promise<any[]> {
+export async function getGameStores(gameId: number): Promise<GameStore[]> {
     try {
         const response = await axios.get(`${BASE_URL}/games/${gameId}/stores?key=${API_KEY}`)
+        console.log(response.data.results)
         return response.data.results
     } catch (error) {
         console.error(`Error fetching stores for game ${gameId}:`, error)

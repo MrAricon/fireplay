@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Heart, ShoppingCart, Globe, Calendar, Star } from "lucide-react"
 import type { GameDetails as GameDetailsType } from "@/types/game-details"
+import type { GameStore as GameStoreType } from "@/types/game-store"
 import { useAuth } from "@/context/auth-context"
 import { toggleFavorite } from "@/lib/favorites"
 import { addToCartFirestore, addToCartLocalStorage } from "@/lib/cart"
@@ -19,7 +20,7 @@ export default function GameDetails({ game, screenshots }: GameDetailsProps) {
     const [isFavorite, setIsFavorite] = useState(false)
     const [activeImage, setActiveImage] = useState(game.background_image)
     const [showFullDescription, setShowFullDescription] = useState(false)
-    const [stores, setStores] = useState<any[]>([])
+    const [stores, setStores] = useState<GameStoreType[]>([])
 
     // Calcular precio de manera determinista
     const { price, hasDiscount, discountPercentage, originalPrice } = calculateGamePrice(game)
@@ -184,7 +185,7 @@ export default function GameDetails({ game, screenshots }: GameDetailsProps) {
                                         rel="noopener noreferrer"
                                         className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded hover:bg-gray-600 transition-colors"
                                     >
-                                        {store.store?.name || "Unknown Store"}
+                                        {store.name || "Unknown Store"}
                                     </a>
                                 ))}
                             </div>

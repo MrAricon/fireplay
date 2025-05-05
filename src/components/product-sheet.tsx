@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { ShoppingCart, Star } from "lucide-react"
 import type { GameDetails } from "@/types/game-details"
 import { useAuth } from "@/context/auth-context"
+import type { GameStore as GameStoreType } from "@/types/game-store"
 import { addToCartFirestore, addToCartLocalStorage } from "@/lib/cart"
 import { calculateGamePrice, getGameStores } from "@/lib/api"
 import ReviewsSection from "@/components/reviews-section"
@@ -14,7 +15,7 @@ interface ProductSheetProps {
 
 export default function ProductSheet({ game }: ProductSheetProps) {
     const { user } = useAuth()
-    const [stores, setStores] = useState<any[]>([])
+    const [stores, setStores] = useState<GameStoreType[]>([])
 
     // Calcular precio de manera determinista
     const { price, hasDiscount, discountPercentage, originalPrice } = calculateGamePrice(game)
@@ -146,7 +147,7 @@ export default function ProductSheet({ game }: ProductSheetProps) {
                                             rel="noopener noreferrer"
                                             className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded hover:bg-gray-600 transition-colors"
                                         >
-                                            {store.store?.name || "Unknown Store"}
+                                            {store.name || "Unknown Store"}
                                         </a>
                                     ))}
                                 </div>
