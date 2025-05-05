@@ -136,7 +136,7 @@ interface StaggerItemProps {
     customDelay?: number
 }
 
-export function StaggerItem({ children, className = "", index = 0, customDelay = 0 }: StaggerItemProps) {
+export function StaggerItem({ children, className = "", customDelay = 0 }: StaggerItemProps) {
     return (
         <motion.div
             variants={{

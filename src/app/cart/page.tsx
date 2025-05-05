@@ -19,7 +19,6 @@ export default function CartPage() {
     const [cartItems, setCartItems] = useState<CartItem[]>([])
     const [loading, setLoading] = useState(true)
     const { user } = useAuth()
-    const router = useRouter()
 
     useEffect(() => {
         const fetchCart = async () => {

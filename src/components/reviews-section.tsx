@@ -31,7 +31,6 @@ export default function ReviewsSection({ game }: ReviewsSectionProps) {
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
     const [userHasReviewed, setUserHasReviewed] = useState(false)
-    const [editingReview, setEditingReview] = useState<string | null>(null)
     const [averageRating, setAverageRating] = useState(0)
     const [reviewCount, setReviewCount] = useState(0)
 

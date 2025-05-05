@@ -147,7 +147,7 @@ export default function SearchAutocomplete() {
             {/* Sin resultados */}
             {showResults && query.length >= 2 && !isLoading && results.length === 0 && (
                 <div className="absolute z-50 mt-1 w-full bg-gray-800 rounded-lg shadow-lg p-4 text-center">
-                    <div className="text-gray-400">No se encontraron resultados para "{query}"</div>
+                    <div className="text-gray-400">No se encontraron resultados para &quot;{query}&quot;</div>
                 </div>
             )}
         </div>

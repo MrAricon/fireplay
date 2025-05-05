@@ -31,7 +31,7 @@ export default async function SearchPage({
                 <h1 className="text-3xl font-bold mb-2">Búsqueda de juegos</h1>
                 {query ? (
                     <p className="text-gray-400">
-                        Resultados para: <span className="text-white font-medium">"{query}"</span>
+                        Resultados para: <span className="text-white font-medium">&quot;{query}&quot;</span>
                     </p>
                 ) : (
                     <p className="text-gray-400">Utiliza la barra de búsqueda para encontrar juegos</p>
@@ -59,7 +59,7 @@ export default async function SearchPage({
 
                     {query && games.length === 0 && (
                         <div className="text-center py-12 bg-gray-800 rounded-lg">
-                            <p className="text-xl text-gray-400">No se encontraron resultados para "{query}"</p>
+                            <p className="text-xl text-gray-400">No se encontraron resultados para &quot;{query}&quot;</p>
                             <p className="mt-2 text-gray-500">Intenta con otra búsqueda o ajusta los filtros</p>
                         </div>
                     )}
