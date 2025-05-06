@@ -3,13 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import GameDetails from "@/components/game-details";
 
-interface GamePageProps {
-  params: {
-    slug: string;
-  };
-}
-
-export default async function GamePage({ params }: GamePageProps) {
+export default async function GamePage({ params }: { params: { slug: string } }) {
   const game = await getGameDetails(params.slug);
 
   if (!game) {
