@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore"
 import { db } from "@/firebase/firebase"
 import type { Review } from "@/types/review"
+import type { Like } from "@/types/like"
 
 // Función para añadir una reseña
 export async function addReview(review: Omit<Review, "id">): Promise<string> {
@@ -124,26 +125,28 @@ export async function likeReview(reviewId: string, userId: string): Promise<void
             const reviewData = reviewSnap.data() as Review
 
             // Verificar si el usuario ya dio like
-            const likedBy = reviewData.likedBy || []
-            const dislikedBy = reviewData.dislikedBy || []
+            const likedBy = reviewData.likes.likedBy || []
+            const dislikedBy = reviewData.likes.dislikedBy || []
 
             // Si ya dio like, quitar el like
             if (likedBy.includes(userId)) {
                 await updateDoc(reviewRef, {
-                    likes: reviewData.likes - 1,
+                    likes: reviewData.likes.likes - 1,
                     likedBy: likedBy.filter((id) => id !== userId),
                 })
             }
             // Si no ha dado like, añadir like y quitar dislike si existe
             else {
-                const updates: any = {
-                    likes: reviewData.likes + 1,
+                const updates: Like = {
+                    likes: reviewData.likes.likes + 1,
                     likedBy: [...likedBy, userId],
+                    dislikedBy: [],
+                    dislikes: 0
                 }
 
                 // Si había dado dislike, quitarlo
                 if (dislikedBy.includes(userId)) {
-                    updates.dislikes = reviewData.dislikes - 1
+                    updates.dislikes = reviewData.likes.dislikes - 1
                     updates.dislikedBy = dislikedBy.filter((id) => id !== userId)
                 }
 
@@ -166,26 +169,28 @@ export async function dislikeReview(reviewId: string, userId: string): Promise<v
             const reviewData = reviewSnap.data() as Review
 
             // Verificar si el usuario ya dio dislike
-            const likedBy = reviewData.likedBy || []
-            const dislikedBy = reviewData.dislikedBy || []
+            const likedBy = reviewData.likes.likedBy || []
+            const dislikedBy = reviewData.likes.dislikedBy || []
 
             // Si ya dio dislike, quitar el dislike
             if (dislikedBy.includes(userId)) {
                 await updateDoc(reviewRef, {
-                    dislikes: reviewData.dislikes - 1,
+                    dislikes: reviewData.likes.dislikes - 1,
                     dislikedBy: dislikedBy.filter((id) => id !== userId),
                 })
             }
             // Si no ha dado dislike, añadir dislike y quitar like si existe
             else {
-                const updates: any = {
-                    dislikes: reviewData.dislikes + 1,
+                const updates: Like = {
+                    likes: 0,
+                    likedBy: [],
+                    dislikes: reviewData.likes.dislikes + 1,
                     dislikedBy: [...dislikedBy, userId],
                 }
 
                 // Si había dado like, quitarlo
                 if (likedBy.includes(userId)) {
-                    updates.likes = reviewData.likes - 1
+                    updates.likes = reviewData.likes.likes - 1
                     updates.likedBy = likedBy.filter((id) => id !== userId)
                 }
 

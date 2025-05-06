@@ -3,10 +3,13 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Filter, ChevronDown, ChevronUp } from "lucide-react"
+import type { Genere } from "@/types/genere"
+import type { Platform } from "@/types/platform"
+
 
 interface SearchFiltersProps {
-  genres: any[]
-  platforms: any[]
+  genres: Genere[]
+  platforms: Platform[]
   currentGenre: string
   currentPlatform: string
   currentOrdering: string

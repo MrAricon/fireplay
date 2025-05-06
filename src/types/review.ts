@@ -1,3 +1,5 @@
+import type { Like } from "@/types/like"
+
 export interface Review {
     id?: string
     gameId: number
@@ -7,8 +9,5 @@ export interface Review {
     rating: number
     content: string
     date: string
-    likes: number
-    dislikes: number
-    likedBy?: string[]
-    dislikedBy?: string[]
+    likes: Like
 }

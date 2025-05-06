@@ -40,14 +40,14 @@ export default function RegisterPage() {
             setLoading(true)
             await register(email, password, name)
             router.push("/")
-        } catch (error: any) {
-            console.error("Error de registro:", error)
+        } catch (err: unknown) {
+            console.error("Error de registro:", err)
 
-            if (error.code === "auth/email-already-in-use") {
+            if (err instanceof Error && (err as { code?: string }).code === "auth/email-already-in-use") {
                 setError("Este email ya está en uso")
-            } else if (error.code === "auth/invalid-email") {
+            } else if (err instanceof Error && (err as { code?: string }).code === "auth/invalid-email") {
                 setError("Email inválido")
-            } else if (error.code === "auth/weak-password") {
+            }  else if (err instanceof Error && (err as { code?: string }).code === "auth/weak-password") {
                 setError("La contraseña es demasiado débil")
             } else {
                 setError("Error al crear la cuenta. Inténtalo de nuevo")

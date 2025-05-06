@@ -28,15 +28,15 @@ export default function LoginPage() {
             setLoading(true)
             await login(email, password)
             router.push("/")
-        } catch (error: any) {
-            console.error("Error de inicio de sesión:", error)
+        } catch (err: unknown) {
+            console.error("Error de inicio de sesión:", err)
 
-            if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+            if (err instanceof Error && (err as { code?: string }).code === "auth/user-not-found" || (err as { code?: string }).code === "auth/wrong-password") {
                 setError("Email o contraseña incorrectos")
-            } else if (error.code === "auth/too-many-requests") {
+            } else if (err instanceof Error && (err as { code?: string }).code === "auth/too-many-requests") {
                 setError("Demasiados intentos fallidos. Inténtalo más tarde")
             } else {
-                setError("Error al iniciar sesión. Inténtalo de nuevo")
+                setError("Error al iniciar sesión. Por favor, inténtalo de nuevo.")
             }
         } finally {
             setLoading(false)
