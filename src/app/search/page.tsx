@@ -5,16 +5,16 @@ import SearchAutocomplete from "@/components/search-autocomplete"
 import SearchFilters from "@/components/search-filters"
 import type { Game } from "@/types/game"
 
-export default async function SearchPage({
-    searchParams,
-}: {
-    searchParams: { query?: string; page?: string; genre?: string; platform?: string; ordering?: string }
-}) {
-    const query = searchParams.query || ""
-    const currentPage = searchParams.page ? Number.parseInt(searchParams.page) : 1
-    const genreFilter = searchParams.genre || ""
-    const platformFilter = searchParams.platform || ""
-    const orderingFilter = searchParams.ordering || "-rating"
+type Params = Promise<{
+    query?: string; page?: number; genre?: string; platform?: string; ordering?: string
+}>
+
+export default async function SearchPage( search: { searchParams: Params }) {
+    const query = (await search.searchParams).query || ""
+    const currentPage = (await search.searchParams).page || 1
+    const genreFilter = (await search.searchParams).genre || ""
+    const platformFilter = (await search.searchParams).platform || ""
+    const orderingFilter = (await search.searchParams).ordering || "-rating"
     const pageSize = 20
 
     // Obtener datos para los filtros
