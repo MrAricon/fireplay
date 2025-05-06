@@ -3,11 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import GameDetails from "@/components/game-details";
 
-interface PageProps {
-  params: Promise<{ slug: string }>;
-}
+type Params = Promise<{ slug: string }>
 
-export default async function GamePage(props: PageProps) {
+export default async function GamePage(props: { params: Params }) {
   // Await the params Promise to get the actual values
   const params = await props.params;
   const game = await getGameDetails(params.slug);
