@@ -3,12 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import GameDetails from "@/components/game-details";
 
-interface PageProps {
+export default async function GamePage({
+  params,
+}: {
   params: { slug: string };
   searchParams?: { [key: string]: string | string[] | undefined };
-}
-
-export default async function GamePage({ params }: PageProps) {
+}) {
   const game = await getGameDetails(params.slug);
 
   if (!game) {
