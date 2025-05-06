@@ -3,7 +3,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import GameDetails from "@/components/game-details"
 
-export default async function GamePage({ params }: { params: { slug: Promise<string> } }) {
+export default async function GamePage({ params }: { params: { slug: Promise<any> } }) {
     const game = await getGameDetails(await params.slug)
 
     if (!game) {
